@@ -155,7 +155,6 @@ fn main() {
 * 
 */
 fn partition_data(num_partitions: usize, v: &Vec<usize>) -> Vec<Vec<usize>>{
-    // Remove the following line which has been added to remove a compiler error
     let partition_size = v.len() / num_partitions;
     let mut xs: Vec<Vec<usize>> = Vec::new();
 
