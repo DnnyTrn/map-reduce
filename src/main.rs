@@ -158,20 +158,24 @@ fn main() {
 */
 fn partition_data(num_partitions: usize, v: &Vec<usize>) -> Vec<Vec<usize>>{
     let partition_size = v.len() / num_partitions;
-    let mut remaining = v.len() % num_partitions;
-    println!("remaining {}",remaining);
     let mut xs: Vec<Vec<usize>> = Vec::new();
-    
-    let mut j = 0;
+    let mut n = v.len() % num_partitions;   //n is remainder
+    let mut r = 0;  // if there is a remainder then r is 1
+    if (n > 0){
+        r = 1;
+    }
+    let length = v.len();
+    let mut j = 0;  // lower bound
     for i in 0..num_partitions {
-        let mut v_new: Vec<usize> = Vec::new();
-        let mut k = (i + 1) * partition_size;
-        for e in j..k {
-            // println!("i:{}, e:{}, K:{}",i, e,k);
-            v_new.push(v[e]);
+        let v_slice = &v[j..j+partition_size+r];
+        j += partition_size+r; 
+        if n > 0{   //decrease remaining by 1
+            n -= 1;
+        }   
+        if n == 0{  //no more remaining, upper bound is partition size
+            r = 0;
         }
-        j = k;
-        xs.push(v_new);
+        xs.push(v_slice.to_vec());
     }
     xs
 }
