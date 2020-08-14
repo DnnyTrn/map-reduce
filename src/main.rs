@@ -120,17 +120,19 @@ fn main() {
     // CHANGE CODE END: Don't change any code below this line until the next CHANGE CODE comment
 
     // Print the vector with the intermediate sums
-    println!("Intermediate sums = {:?}", intermediate_sums);
+    // println!("Intermediate sums = {:?}", intermediate_sums);
 
     // REDUCE STEP: Process the intermediate result to produce the final result
     let sum = reduce_data(&intermediate_sums);
-    println!("Sum = {}", sum);
+    // println!("Sum = {}", sum);
 
     // CHANGE CODE: Add code that does the following:
     // 1. Calls partition_data to partition the data into equal partitions
-    partition_data(num_partitions, &v);
+    let xs_main = partition_data(num_partitions, &v);
     // 2. Calls print_partition_info to print info on the partitions that have been created
+    print_partition_info(&xs_main);
     // 3. Creates one thread per partition and uses each thread to process one partition
+    
     // 4. Collects the intermediate sums from all the threads
     // 5. Prints information about the intermediate sums
     // 5. Calls reduce_data to process the intermediate sums
@@ -156,7 +158,20 @@ fn main() {
 */
 fn partition_data(num_partitions: usize, v: &Vec<usize>) -> Vec<Vec<usize>>{
     let partition_size = v.len() / num_partitions;
+    let mut remaining = v.len() % num_partitions;
+    println!("remaining {}",remaining);
     let mut xs: Vec<Vec<usize>> = Vec::new();
-
+    
+    let mut j = 0;
+    for i in 0..num_partitions {
+        let mut v_new: Vec<usize> = Vec::new();
+        let mut k = (i + 1) * partition_size;
+        for e in j..k {
+            // println!("i:{}, e:{}, K:{}",i, e,k);
+            v_new.push(v[e]);
+        }
+        j = k;
+        xs.push(v_new);
+    }
     xs
 }
