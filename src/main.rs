@@ -1,3 +1,4 @@
+// Author : Danny Tran
 use std::env; // to get arugments passed to the program
 use std::thread;
 
